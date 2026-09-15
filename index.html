@@ -1,342 +1,1203 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="manifest" href="manifest.json">
+
+<link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#222222">
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DUP Fuel Calculator</title>
+
+<title>JGM Fuel App</title>
 
 <style>
-    * {
-        box-sizing: border-box;
-        font-family: Arial, sans-serif;
-    }
 
-    body {
-        margin: 0;
-        background: #f2f2f2;
-        padding: 15px;
-    }
+* {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
 
-    .container {
-        max-width: 600px;
-        margin: auto;
-        background: white;
-        padding: 20px;
-        border-radius: 12px;
-        box-shadow: 0 3px 12px rgba(0,0,0,0.15);
-    }
+body {
+    margin: 0;
+    background: #f2f2f2;
+    color: #222;
+}
 
-    h1 {
-        text-align: center;
-        margin-top: 0;
-    }
+/* =========================
+   HEADER
+========================= */
 
-    .fuel {
-        border: 2px solid #ddd;
-        border-radius: 10px;
-        padding: 15px;
-        margin-bottom: 15px;
-    }
+.header {
+    height: 60px;
+    background: #222;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
 
-    /* DUP BACKGROUND COLORS */
-    .diesel {
-        background: #fff3a3;
-    }
+.menu-btn {
+    background: none;
+    color: white;
+    border: none;
+    font-size: 30px;
+    cursor: pointer;
+    width: 50px;
+    padding: 0;
+    margin: 0;
+}
 
-    .unleaded {
-        background: #b8f5c0;
-    }
+.header-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 5px;
+}
 
-    .premium {
-        background: #ffb3b3;
-    }
+/* =========================
+   SIDE MENU
+========================= */
 
-    .fuel h2 {
-        margin: 0 0 12px;
-        text-align: center;
-    }
+.side-menu {
+    position: fixed;
+    top: 60px;
+    left: -280px;
+    width: 280px;
+    height: calc(100% - 60px);
+    background: white;
+    box-shadow: 3px 0 10px #0003;
+    transition: 0.3s;
+    z-index: 999;
+    padding: 15px;
+}
 
-    .row {
-        display: flex;
-        gap: 10px;
-        margin-bottom: 10px;
-    }
+.side-menu.open {
+    left: 0;
+}
 
-    .field {
-        flex: 1;
-    }
+.side-menu h2 {
+    margin-top: 5px;
+}
 
-    label {
-        display: block;
-        font-size: 13px;
-        margin-bottom: 5px;
-        font-weight: bold;
-    }
+.menu-item {
+    width: 100%;
+    padding: 15px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 8px;
+    background: #eee;
+    font-size: 17px;
+    font-weight: bold;
+    text-align: left;
+    cursor: pointer;
+}
 
-    input {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #aaa;
-        border-radius: 6px;
-        font-size: 16px;
-    }
+.menu-item:active {
+    transform: scale(.98);
+}
 
-    .result {
-        background: #f5f5f5;
-        padding: 10px;
-        border-radius: 6px;
-        margin-top: 8px;
-    }
+/* =========================
+   MAIN
+========================= */
 
-    .amount {
-        font-size: 20px;
-        font-weight: bold;
-    }
+.page {
+    padding: 15px;
+}
 
-    .total {
-        margin-top: 20px;
-        padding: 18px;
-        background: #222;
-        color: white;
-        border-radius: 10px;
-        text-align: center;
-    }
+.container {
+    max-width: 600px;
+    margin: auto;
+}
 
-    .total h2 {
-        margin: 0 0 5px;
-    }
+/* =========================
+   REMITTANCE CALCULATOR
+========================= */
 
-    #grandTotal {
-        font-size: 30px;
-        font-weight: bold;
-    }
+.calculator-box {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+}
 
-    button {
-        width: 100%;
-        padding: 12px;
-        margin-top: 15px;
-        border: none;
-        border-radius: 7px;
-        font-size: 17px;
-        font-weight: bold;
-        cursor: pointer;
-    }
+.calculator-box h1 {
+    text-align: center;
+    margin-top: 0;
+}
 
-    .reset {
-        background: #ddd;
-    }
+.fuel {
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.diesel {
+    background: #fff3a3;
+}
+
+.unleaded {
+    background: #b8f5c0;
+}
+
+.premium {
+    background: #ffb3b3;
+}
+
+.fuel h2 {
+    margin: 0 0 12px;
+    text-align: center;
+}
+
+.row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.field {
+    flex: 1;
+}
+
+label {
+    display: block;
+    font-size: 13px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #aaa;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+.result-box {
+    background: #f5f5f5;
+    padding: 10px;
+    border-radius: 6px;
+    margin-top: 8px;
+}
+
+.amount {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.total {
+    margin-top: 20px;
+    padding: 18px;
+    background: #222;
+    color: white;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.total h2 {
+    margin: 0 0 5px;
+}
+
+#grandTotal {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.reset {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 7px;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    background: #ddd;
+}
+
+/* =========================
+   DIGIT CHECKER
+========================= */
+
+.checker-box {
+    max-width: 600px;
+    margin: auto;
+}
+
+.checker-title {
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.card {
+    background: white;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px #0002;
+}
+
+.card h2 {
+    margin-top: 0;
+}
+
+.price-row {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.price-row input {
+    padding: 12px;
+    font-size: 20px;
+}
+
+.check-button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 8px;
+    background: #1976d2;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.check-button:active {
+    transform: scale(.98);
+}
+
+.missing {
+    font-size: 28px;
+    font-weight: bold;
+    letter-spacing: 5px;
+    margin-top: 8px;
+}
+
+.available {
+    color: #087f23;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.note {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.5;
+}
+
+/* =========================
+   HIDDEN PAGES
+========================= */
+
+.app-page {
+    display: none;
+}
+
+.app-page.active {
+    display: block;
+}
+
 </style>
+
 </head>
 
 <body>
 
-<div class="container">
+<!-- =========================
+     HEADER
+========================= -->
 
-    <h1>JGM Remittance Calculator</h1>
+<div class="header">
 
-    <!-- DIESEL -->
-    <div class="fuel diesel">
-        <h2>D — Diesel</h2>
+    <button class="menu-btn" onclick="toggleMenu()">
+        ☰
+    </button>
 
-        <div class="row">
-            <div class="field">
-                <label>Beginning</label>
-                <input type="number" id="dbeg" step="0.01" oninput="calculate()">
-            </div>
-
-            <div class="field">
-                <label>Ending</label>
-                <input type="number" id="dend" step="0.01" oninput="calculate()">
-            </div>
-        </div>
-
-        <div class="field">
-            <label>Price / Liter</label>
-            <input type="number" id="dprice" value="" step="0.01" oninput="calculate()">
-        </div>
-
-        <div class="result">
-            Variance:
-            <strong id="dvar">0.00 L</strong>
-        </div>
-
-        <div class="result">
-            Amount:
-            <span class="amount" id="damount">₱0.00</span>
-        </div>
+    <div class="header-title">
+        JGM Fuel App
     </div>
-
-
-    <!-- UNLEADED -->
-    <div class="fuel unleaded">
-        <h2>U — Unleaded</h2>
-
-        <div class="row">
-            <div class="field">
-                <label>Beginning</label>
-                <input type="number" id="ubeg" step="0.01" oninput="calculate()">
-            </div>
-
-            <div class="field">
-                <label>Ending</label>
-                <input type="number" id="uend" step="0.01" oninput="calculate()">
-            </div>
-        </div>
-
-        <div class="field">
-            <label>Price / Liter</label>
-            <input type="number" id="uprice" value="" step="0.01" oninput="calculate()">
-        </div>
-
-        <div class="result">
-            Variance:
-            <strong id="uvar">0.00 L</strong>
-        </div>
-
-        <div class="result">
-            Amount:
-            <span class="amount" id="uamount">₱0.00</span>
-        </div>
-    </div>
-
-
-    <!-- PREMIUM -->
-    <div class="fuel premium">
-        <h2>P — Premium</h2>
-
-        <div class="row">
-            <div class="field">
-                <label>Beginning</label>
-                <input type="number" id="pbeg" step="0.01" oninput="calculate()">
-            </div>
-
-            <div class="field">
-                <label>Ending</label>
-                <input type="number" id="pend" step="0.01" oninput="calculate()">
-            </div>
-        </div>
-
-        <div class="field">
-            <label>Price / Liter</label>
-            <input type="number" id="pprice" value="" step="0.01" oninput="calculate()">
-        </div>
-
-        <div class="result">
-            Variance:
-            <strong id="pvar">0.00 L</strong>
-        </div>
-
-        <div class="result">
-            Amount:
-            <span class="amount" id="pamount">₱0.00</span>
-        </div>
-    </div>
-
-
-    <!-- GRAND TOTAL -->
-    <div class="total">
-        <h2>GRAND TOTAL</h2>
-        <div id="grandTotal">₱0.00</div>
-    </div>
-
-    <button class="reset" onclick="resetCalculator()">RESET</button>
 
 </div>
 
 
+<!-- =========================
+     BURGER MENU
+========================= -->
+
+<div class="side-menu" id="sideMenu">
+
+    <h2>MENU</h2>
+
+    <button class="menu-item" onclick="showPage('remittance')">
+        ⛽ JGM Remittance Calculator
+    </button>
+
+    <button class="menu-item" onclick="showPage('checker')">
+        🔢 Fuel Price Digit Checker
+    </button>
+
+</div>
+
+
+<!-- =========================
+     MAIN CONTENT
+========================= -->
+
+<div class="page">
+
+<div class="container">
+
+
+<!-- =====================================================
+     REMITTANCE CALCULATOR
+===================================================== -->
+
+<div id="remittance" class="app-page active">
+
+<div class="calculator-box">
+
+<h1>JGM Remittance Calculator</h1>
+
+
+<!-- DIESEL -->
+
+<div class="fuel diesel">
+
+<h2>D — Diesel</h2>
+
+<div class="row">
+
+<div class="field">
+<label>Beginning</label>
+
+<input
+type="number"
+id="dbeg"
+step="0.01"
+oninput="remittanceCalculate()">
+</div>
+
+
+<div class="field">
+<label>Ending</label>
+
+<input
+type="number"
+id="dend"
+step="0.01"
+oninput="remittanceCalculate()">
+</div>
+
+</div>
+
+
+<div class="field">
+
+<label>Price / Liter</label>
+
+<input
+type="number"
+id="dprice"
+step="0.01"
+oninput="remittanceCalculate()">
+
+</div>
+
+
+<div class="result-box">
+
+Variance:
+<strong id="dvar">0.00 L</strong>
+
+</div>
+
+
+<div class="result-box">
+
+Amount:
+<span class="amount" id="damount">₱0.00</span>
+
+</div>
+
+</div>
+
+
+<!-- UNLEADED -->
+
+<div class="fuel unleaded">
+
+<h2>U — Unleaded</h2>
+
+<div class="row">
+
+<div class="field">
+
+<label>Beginning</label>
+
+<input
+type="number"
+id="ubeg"
+step="0.01"
+oninput="remittanceCalculate()">
+
+</div>
+
+
+<div class="field">
+
+<label>Ending</label>
+
+<input
+type="number"
+id="uend"
+step="0.01"
+oninput="remittanceCalculate()">
+
+</div>
+
+</div>
+
+
+<div class="field">
+
+<label>Price / Liter</label>
+
+<input
+type="number"
+id="uprice"
+step="0.01"
+oninput="remittanceCalculate()">
+
+</div>
+
+
+<div class="result-box">
+
+Variance:
+<strong id="uvar">0.00 L</strong>
+
+</div>
+
+
+<div class="result-box">
+
+Amount:
+<span class="amount" id="uamount">₱0.00</span>
+
+</div>
+
+</div>
+
+
+<!-- PREMIUM -->
+
+<div class="fuel premium">
+
+<h2>P — Premium</h2>
+
+<div class="row">
+
+<div class="field">
+
+<label>Beginning</label>
+
+<input
+type="number"
+id="pbeg"
+step="0.01"
+oninput="remittanceCalculate()">
+
+</div>
+
+
+<div class="field">
+
+<label>Ending</label>
+
+<input
+type="number"
+id="pend"
+step="0.01"
+oninput="remittanceCalculate()">
+
+</div>
+
+</div>
+
+
+<div class="field">
+
+<label>Price / Liter</label>
+
+<input
+type="number"
+id="pprice"
+step="0.01"
+oninput="remittanceCalculate()">
+
+</div>
+
+
+<div class="result-box">
+
+Variance:
+<strong id="pvar">0.00 L</strong>
+
+</div>
+
+
+<div class="result-box">
+
+Amount:
+<span class="amount" id="pamount">₱0.00</span>
+
+</div>
+
+</div>
+
+
+<!-- TOTAL -->
+
+<div class="total">
+
+<h2>GRAND TOTAL</h2>
+
+<div id="grandTotal">
+₱0.00
+</div>
+
+</div>
+
+
+<button
+class="reset"
+onclick="resetCalculator()">
+
+RESET
+
+</button>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     FUEL PRICE DIGIT CHECKER
+===================================================== -->
+
+<div id="checker" class="app-page">
+
+<div class="checker-box">
+
+<h1 class="checker-title">
+⛽ Fuel Price Digit Checker
+</h1>
+
+<div class="subtitle">
+Diesel • Unleaded • Premium
+</div>
+
+
+<!-- OLD PRICE -->
+
+<div class="card">
+
+<h2>OLD PRICE</h2>
+
+
+<div class="price-row">
+
+<label>Diesel D</label>
+
+<input
+id="oldD"
+type="text"
+value="85.90">
+
+</div>
+
+
+<div class="price-row">
+
+<label>Unleaded U</label>
+
+<input
+id="oldU"
+type="text"
+value="84.50">
+
+</div>
+
+
+<div class="price-row">
+
+<label>Premium P</label>
+
+<input
+id="oldP"
+type="text"
+value="85.50">
+
+</div>
+
+</div>
+
+
+<!-- NEW PRICE -->
+
+<div class="card">
+
+<h2>NEW PRICE</h2>
+
+
+<div class="price-row">
+
+<label>Diesel D</label>
+
+<input
+id="newD"
+type="text"
+value="89.90">
+
+</div>
+
+
+<div class="price-row">
+
+<label>Unleaded U</label>
+
+<input
+id="newU"
+type="text"
+value="79.50">
+
+</div>
+
+
+<div class="price-row">
+
+<label>Premium P</label>
+
+<input
+id="newP"
+type="text"
+value="45.50">
+
+</div>
+
+
+<button
+class="check-button"
+onclick="digitCheckerCalculate()">
+
+CHECK MISSING DIGITS
+
+</button>
+
+</div>
+
+
+<!-- RESULT -->
+
+<div class="card">
+
+<h2>RESULT</h2>
+
+<div id="digitResult">
+
+Enter the prices and press the button.
+
+</div>
+
+</div>
+
+
+<!-- INFORMATION -->
+
+<div class="card">
+
+<h2>ℹ️ How it works</h2>
+
+<p class="note">
+
+The app checks the digits required by the
+<strong>NEW prices</strong> against the digits
+available from the <strong>OLD prices</strong>.
+
+</p>
+
+
+<p class="note">
+
+<strong>Important:</strong>
+6 and 9 are treated as the same digit because
+you can turn a 6 into a 9 and vice versa.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- =========================
+     JAVASCRIPT
+========================= -->
+
 <script>
 
-function getNumber(id) {
-    return parseFloat(document.getElementById(id).value) || 0;
+
+/* =========================
+   BURGER MENU
+========================= */
+
+function toggleMenu() {
+
+    const menu = document.getElementById("sideMenu");
+
+    menu.classList.toggle("open");
+
 }
+
+
+/* =========================
+   SWITCH APP PAGE
+========================= */
+
+function showPage(page) {
+
+    document
+        .querySelectorAll(".app-page")
+        .forEach(function(element) {
+
+            element.classList.remove("active");
+
+        });
+
+
+    document
+        .getElementById(page)
+        .classList.add("active");
+
+
+    document
+        .getElementById("sideMenu")
+        .classList.remove("open");
+
+}
+
+
+/* =========================
+   REMITTANCE CALCULATOR
+========================= */
+
+function getNumber(id) {
+
+    return parseFloat(
+        document.getElementById(id).value
+    ) || 0;
+
+}
+
 
 function money(value) {
+
     return "₱" + value.toLocaleString("en-PH", {
+
         minimumFractionDigits: 2,
+
         maximumFractionDigits: 2
+
     });
+
 }
 
-function calculate() {
 
-    // DIESEL
+function remittanceCalculate() {
+
+
+    /* DIESEL */
+
     let dbeg = getNumber("dbeg");
+
     let dend = getNumber("dend");
+
     let dprice = getNumber("dprice");
 
     let dvariance = dend - dbeg;
+
     let damount = dvariance * dprice;
+
 
     document.getElementById("dvar").textContent =
         dvariance.toFixed(2) + " L";
+
 
     document.getElementById("damount").textContent =
         money(damount);
 
 
-    // UNLEADED
+
+    /* UNLEADED */
+
     let ubeg = getNumber("ubeg");
+
     let uend = getNumber("uend");
+
     let uprice = getNumber("uprice");
 
     let uvariance = uend - ubeg;
+
     let uamount = uvariance * uprice;
+
 
     document.getElementById("uvar").textContent =
         uvariance.toFixed(2) + " L";
+
 
     document.getElementById("uamount").textContent =
         money(uamount);
 
 
-    // PREMIUM
+
+    /* PREMIUM */
+
     let pbeg = getNumber("pbeg");
+
     let pend = getNumber("pend");
+
     let pprice = getNumber("pprice");
 
     let pvariance = pend - pbeg;
+
     let pamount = pvariance * pprice;
+
 
     document.getElementById("pvar").textContent =
         pvariance.toFixed(2) + " L";
+
 
     document.getElementById("pamount").textContent =
         money(pamount);
 
 
-    // GRAND TOTAL
-    let total = damount + uamount + pamount;
+
+    /* GRAND TOTAL */
+
+    let total =
+        damount +
+        uamount +
+        pamount;
+
 
     document.getElementById("grandTotal").textContent =
         money(total);
+
 }
 
+
+/* =========================
+   RESET
+========================= */
 
 function resetCalculator() {
 
     document.getElementById("dbeg").value = "";
+
     document.getElementById("dend").value = "";
 
+    document.getElementById("dprice").value = "";
+
+
     document.getElementById("ubeg").value = "";
+
     document.getElementById("uend").value = "";
 
+    document.getElementById("uprice").value = "";
+
+
     document.getElementById("pbeg").value = "";
+
     document.getElementById("pend").value = "";
 
-    document.getElementById("dprice").value = "";
-    document.getElementById("uprice").value = "";
     document.getElementById("pprice").value = "";
 
-    calculate();
+
+    remittanceCalculate();
+
+}
+
+
+/* =========================
+   DIGIT CHECKER
+========================= */
+
+function normalizeDigit(digit) {
+
+    if (digit === "6" || digit === "9") {
+
+        return "6/9";
+
+    }
+
+    return digit;
+
+}
+
+
+function getDigits(price) {
+
+    return price
+        .replace(/[^0-9]/g, "")
+        .split("");
+
+}
+
+
+function countDigits(digits) {
+
+    let count = {};
+
+
+    digits.forEach(function(digit) {
+
+        let key = normalizeDigit(digit);
+
+
+        if (!count[key]) {
+
+            count[key] = 0;
+
+        }
+
+
+        count[key]++;
+
+    });
+
+
+    return count;
+
+}
+
+
+function calculateMissing(oldPrices, newPrices) {
+
+    let oldDigits = [];
+
+
+    Object.values(oldPrices).forEach(function(price) {
+
+        oldDigits.push(
+            ...getDigits(price)
+        );
+
+    });
+
+
+    let newDigits = [];
+
+
+    Object.values(newPrices).forEach(function(price) {
+
+        newDigits.push(
+            ...getDigits(price)
+        );
+
+    });
+
+
+    let oldCount =
+        countDigits(oldDigits);
+
+
+    let newCount =
+        countDigits(newDigits);
+
+
+    let missing = {};
+
+
+    Object.keys(newCount).forEach(function(digit) {
+
+        let available =
+            oldCount[digit] || 0;
+
+
+        let needed =
+            newCount[digit];
+
+
+        if (needed > available) {
+
+            missing[digit] =
+                needed - available;
+
+        }
+
+    });
+
+
+    return missing;
+
+}
+
+
+/* =========================
+   CHECK DIGITS
+========================= */
+
+function digitCheckerCalculate() {
+
+    let oldPrices = {
+
+        D: document.getElementById("oldD").value,
+
+        U: document.getElementById("oldU").value,
+
+        P: document.getElementById("oldP").value
+
+    };
+
+
+    let newPrices = {
+
+        D: document.getElementById("newD").value,
+
+        U: document.getElementById("newU").value,
+
+        P: document.getElementById("newP").value
+
+    };
+
+
+    let missing =
+        calculateMissing(
+            oldPrices,
+            newPrices
+        );
+
+
+    let result =
+        document.getElementById("digitResult");
+
+
+    let totalMissing = 0;
+
+
+    Object.values(missing).forEach(function(number) {
+
+        totalMissing += number;
+
+    });
+
+
+    if (totalMissing === 0) {
+
+        result.innerHTML = `
+
+            <div class="available">
+
+                ✅ ALL DIGITS CAN BE REUSED!
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    let html = `
+
+        <p>
+            <strong>
+                Mga digit na kailangan idagdag:
+            </strong>
+        </p>
+
+        <div class="missing">
+
+    `;
+
+
+    Object.keys(missing).forEach(function(digit) {
+
+        let quantity =
+            missing[digit];
+
+
+        for (
+            let i = 0;
+            i < quantity;
+            i++
+        ) {
+
+            html += digit + " ";
+
+        }
+
+    });
+
+
+    html += `
+
+        </div>
+
+        <p>
+
+        Total additional digits:
+        <strong>${totalMissing}</strong>
+
+        </p>
+
+        <p class="note">
+
+        6/9 means puwedeng 6 o 9 ang gamitin.
+
+        </p>
+
+    `;
+
+
+    result.innerHTML = html;
+
+}
+
+
+/* =========================
+   SERVICE WORKER
+========================= */
+
+if ("serviceWorker" in navigator) {
+
+    navigator.serviceWorker.register("./sw.js");
+
 }
 
 </script>
-<script>
-if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("./sw.js");
-}
-</script>
+
 </body>
 </html>
