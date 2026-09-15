@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#222222">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DUP Fuel Calculator</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        margin: 0;
+        background: #f2f2f2;
+        padding: 15px;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+    }
+
+    h1 {
+        text-align: center;
+        margin-top: 0;
+    }
+
+    .fuel {
+        border: 2px solid #ddd;
+        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+
+    /* DUP BACKGROUND COLORS */
+    .diesel {
+        background: #fff3a3;
+    }
+
+    .unleaded {
+        background: #b8f5c0;
+    }
+
+    .premium {
+        background: #ffb3b3;
+    }
+
+    .fuel h2 {
+        margin: 0 0 12px;
+        text-align: center;
+    }
+
+    .row {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+
+    .field {
+        flex: 1;
+    }
+
+    label {
+        display: block;
+        font-size: 13px;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #aaa;
+        border-radius: 6px;
+        font-size: 16px;
+    }
+
+    .result {
+        background: #f5f5f5;
+        padding: 10px;
+        border-radius: 6px;
+        margin-top: 8px;
+    }
+
+    .amount {
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .total {
+        margin-top: 20px;
+        padding: 18px;
+        background: #222;
+        color: white;
+        border-radius: 10px;
+        text-align: center;
+    }
+
+    .total h2 {
+        margin: 0 0 5px;
+    }
+
+    #grandTotal {
+        font-size: 30px;
+        font-weight: bold;
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        margin-top: 15px;
+        border: none;
+        border-radius: 7px;
+        font-size: 17px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .reset {
+        background: #ddd;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>JGM Remittance Calculator</h1>
+
+    <!-- DIESEL -->
+    <div class="fuel diesel">
+        <h2>D — Diesel</h2>
+
+        <div class="row">
+            <div class="field">
+                <label>Beginning</label>
+                <input type="number" id="dbeg" step="0.01" oninput="calculate()">
+            </div>
+
+            <div class="field">
+                <label>Ending</label>
+                <input type="number" id="dend" step="0.01" oninput="calculate()">
+            </div>
+        </div>
+
+        <div class="field">
+            <label>Price / Liter</label>
+            <input type="number" id="dprice" value="" step="0.01" oninput="calculate()">
+        </div>
+
+        <div class="result">
+            Variance:
+            <strong id="dvar">0.00 L</strong>
+        </div>
+
+        <div class="result">
+            Amount:
+            <span class="amount" id="damount">₱0.00</span>
+        </div>
+    </div>
+
+
+    <!-- UNLEADED -->
+    <div class="fuel unleaded">
+        <h2>U — Unleaded</h2>
+
+        <div class="row">
+            <div class="field">
+                <label>Beginning</label>
+                <input type="number" id="ubeg" step="0.01" oninput="calculate()">
+            </div>
+
+            <div class="field">
+                <label>Ending</label>
+                <input type="number" id="uend" step="0.01" oninput="calculate()">
+            </div>
+        </div>
+
+        <div class="field">
+            <label>Price / Liter</label>
+            <input type="number" id="uprice" value="" step="0.01" oninput="calculate()">
+        </div>
+
+        <div class="result">
+            Variance:
+            <strong id="uvar">0.00 L</strong>
+        </div>
+
+        <div class="result">
+            Amount:
+            <span class="amount" id="uamount">₱0.00</span>
+        </div>
+    </div>
+
+
+    <!-- PREMIUM -->
+    <div class="fuel premium">
+        <h2>P — Premium</h2>
+
+        <div class="row">
+            <div class="field">
+                <label>Beginning</label>
+                <input type="number" id="pbeg" step="0.01" oninput="calculate()">
+            </div>
+
+            <div class="field">
+                <label>Ending</label>
+                <input type="number" id="pend" step="0.01" oninput="calculate()">
+            </div>
+        </div>
+
+        <div class="field">
+            <label>Price / Liter</label>
+            <input type="number" id="pprice" value="" step="0.01" oninput="calculate()">
+        </div>
+
+        <div class="result">
+            Variance:
+            <strong id="pvar">0.00 L</strong>
+        </div>
+
+        <div class="result">
+            Amount:
+            <span class="amount" id="pamount">₱0.00</span>
+        </div>
+    </div>
+
+
+    <!-- GRAND TOTAL -->
+    <div class="total">
+        <h2>GRAND TOTAL</h2>
+        <div id="grandTotal">₱0.00</div>
+    </div>
+
+    <button class="reset" onclick="resetCalculator()">RESET</button>
+
+</div>
+
+
+<script>
+
+function getNumber(id) {
+    return parseFloat(document.getElementById(id).value) || 0;
+}
+
+function money(value) {
+    return "₱" + value.toLocaleString("en-PH", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    });
+}
+
+function calculate() {
+
+    // DIESEL
+    let dbeg = getNumber("dbeg");
+    let dend = getNumber("dend");
+    let dprice = getNumber("dprice");
+
+    let dvariance = dend - dbeg;
+    let damount = dvariance * dprice;
+
+    document.getElementById("dvar").textContent =
+        dvariance.toFixed(2) + " L";
+
+    document.getElementById("damount").textContent =
+        money(damount);
+
+
+    // UNLEADED
+    let ubeg = getNumber("ubeg");
+    let uend = getNumber("uend");
+    let uprice = getNumber("uprice");
+
+    let uvariance = uend - ubeg;
+    let uamount = uvariance * uprice;
+
+    document.getElementById("uvar").textContent =
+        uvariance.toFixed(2) + " L";
+
+    document.getElementById("uamount").textContent =
+        money(uamount);
+
+
+    // PREMIUM
+    let pbeg = getNumber("pbeg");
+    let pend = getNumber("pend");
+    let pprice = getNumber("pprice");
+
+    let pvariance = pend - pbeg;
+    let pamount = pvariance * pprice;
+
+    document.getElementById("pvar").textContent =
+        pvariance.toFixed(2) + " L";
+
+    document.getElementById("pamount").textContent =
+        money(pamount);
+
+
+    // GRAND TOTAL
+    let total = damount + uamount + pamount;
+
+    document.getElementById("grandTotal").textContent =
+        money(total);
+}
+
+
+function resetCalculator() {
+
+    document.getElementById("dbeg").value = "";
+    document.getElementById("dend").value = "";
+
+    document.getElementById("ubeg").value = "";
+    document.getElementById("uend").value = "";
+
+    document.getElementById("pbeg").value = "";
+    document.getElementById("pend").value = "";
+
+    document.getElementById("dprice").value = "";
+    document.getElementById("uprice").value = "";
+    document.getElementById("pprice").value = "";
+
+    calculate();
+}
+
+</script>
+<script>
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("./sw.js");
+}
+</script>
+</body>
+</html>
