@@ -1,0 +1,3994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JGM Fuel App</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    font-family:Arial,sans-serif
+}
+
+body{
+    margin:0;
+    background:#f2f2f2;
+    color:#222;
+}
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.header{
+    height:60px;
+    background:#222;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    padding:0 15px;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.menu-btn{
+    background:none;
+    color:#fff;
+    border:none;
+    font-size:30px;
+    cursor:pointer;
+    width:50px;
+    padding:0;
+}
+
+.header-title{
+    font-size:20px;
+    font-weight:bold;
+    margin-left:5px;
+}
+
+/* =====================================================
+   HAMBURGER MENU
+===================================================== */
+
+.side-menu{
+    position:fixed;
+    top:60px;
+    left:-300px;
+    width:300px;
+    height:calc(100% - 60px);
+    background:#fff;
+    box-shadow:3px 0 10px #0003;
+    transition:.3s;
+    z-index:999;
+    padding:15px;
+    overflow-y:auto;
+}
+
+.side-menu.open{
+    left:0;
+}
+
+.side-menu h2{
+    margin-top:5px;
+}
+
+.menu-item{
+    width:100%;
+    padding:15px;
+    margin:8px 0;
+    border:none;
+    border-radius:8px;
+    background:#eee;
+    font-size:17px;
+    font-weight:bold;
+    text-align:left;
+    cursor:pointer;
+}
+
+.side-menu hr{
+    border:none;
+    border-top:1px solid #ddd;
+    margin:15px 0;
+}
+
+/* =====================================================
+   DEVELOPED BY LMLUARES
+===================================================== */
+
+.developer-card{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin:25px 0 5px;
+    padding:14px;
+    background:#f5f5f5;
+    border:1px solid #e0e0e0;
+    border-radius:12px;
+}
+
+.developer-icon{
+    width:42px;
+    height:42px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#222;
+    color:#fff;
+    border-radius:10px;
+    font-size:18px;
+    font-weight:bold;
+}
+
+.developer-info{
+    display:flex;
+    flex-direction:column;
+    line-height:1.2;
+}
+
+.developer-label{
+    font-size:10px;
+    color:#777;
+    letter-spacing:1px;
+    font-weight:bold;
+}
+
+.developer-name{
+    margin-top:3px;
+    font-size:15px;
+    font-weight:bold;
+    color:#222;
+}
+
+/* =====================================================
+   PAGE
+===================================================== */
+
+.page{
+    padding:15px;
+}
+
+.container{
+    max-width:650px;
+    margin:auto;
+}
+
+.app-page{
+    display:none;
+}
+
+.app-page.active{
+    display:block;
+}
+
+/* =====================================================
+   AMOUNT CALCULATOR
+===================================================== */
+
+.calculator-box{
+    background:#fff;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 3px 12px rgba(0,0,0,.15);
+}
+
+.calculator-box h1{
+    text-align:center;
+    margin-top:0;
+}
+
+.pump-box{
+    border:3px solid #222;
+    border-radius:12px;
+    padding:12px;
+    margin-bottom:20px;
+    background:#fafafa;
+}
+
+.pump-title{
+    background:#222;
+    color:#fff;
+    padding:12px;
+    border-radius:8px;
+    text-align:center;
+    margin:0 0 15px;
+    font-size:22px;
+}
+
+.line-box{
+    background:#fff;
+    border:2px solid #ddd;
+    border-radius:10px;
+    padding:12px;
+    margin-bottom:15px;
+}
+
+.line-title{
+    text-align:center;
+    margin:0 0 12px;
+    font-size:20px;
+}
+
+.fuel{
+    border:2px solid #ddd;
+    border-radius:10px;
+    padding:12px;
+    margin-bottom:12px;
+}
+
+.diesel{
+    background:#fff3a3;
+}
+
+.unleaded{
+    background:#b8f5c0;
+}
+
+.premium{
+    background:#ffb3b3;
+}
+
+.fuel h3{
+    margin:0 0 12px;
+    text-align:center;
+}
+
+.row{
+    display:flex;
+    gap:10px;
+    margin-bottom:10px;
+}
+
+.field{
+    flex:1;
+}
+
+label{
+    display:block;
+    font-size:13px;
+    margin-bottom:5px;
+    font-weight:bold;
+}
+
+input,select{
+    width:100%;
+    padding:10px;
+    border:1px solid #aaa;
+    border-radius:6px;
+    font-size:16px;
+    background:#fff;
+}
+
+.result-box{
+    background:#f5f5f5;
+    padding:10px;
+    border-radius:6px;
+    margin-top:8px;
+}
+
+.amount{
+    font-size:20px;
+    font-weight:bold;
+}
+
+.line-total{
+    background:#555;
+    color:#fff;
+    padding:12px;
+    border-radius:8px;
+    text-align:center;
+    margin-top:10px;
+}
+
+.line-total strong{
+    font-size:23px;
+}
+
+.pump-total{
+    background:#1976d2;
+    color:#fff;
+    padding:15px;
+    border-radius:10px;
+    text-align:center;
+    margin-top:10px;
+}
+
+.pump-total h3{
+    margin:0 0 5px;
+}
+
+.pump-total-value{
+    font-size:27px;
+    font-weight:bold;
+}
+
+.total{
+    margin-top:20px;
+    padding:18px;
+    background:#222;
+    color:#fff;
+    border-radius:10px;
+    text-align:center;
+}
+
+.total h2{
+    margin:0 0 5px;
+}
+
+#grandTotal{
+    font-size:30px;
+    font-weight:bold;
+}
+
+/* =====================================================
+   LOCK / UNLOCK BUTTON
+===================================================== */
+
+.lock-button{
+    width:100%;
+    padding:14px;
+    margin-top:15px;
+    border:none;
+    border-radius:8px;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+    color:#fff;
+}
+
+.lock-button.unlocked{
+    background:#2e7d32;
+}
+
+.lock-button.locked{
+    background:#c62828;
+}
+
+.lock-button:active{
+    transform:scale(.98);
+}
+
+/* Locked input appearance */
+
+input.beginning-price-locked{
+    background:#e0e0e0 !important;
+    color:#555 !important;
+    cursor:not-allowed !important;
+    border:2px solid #999 !important;
+}
+
+.reset{
+    width:100%;
+    padding:12px;
+    margin-top:15px;
+    border:none;
+    border-radius:7px;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+    background:#ddd;
+}
+
+/* =====================================================
+   REMITTANCE CALCULATOR
+===================================================== */
+
+.remit-box{
+    background:#fff;
+    padding:18px;
+    border-radius:12px;
+    box-shadow:0 3px 12px rgba(0,0,0,.15);
+}
+
+.remit-title{
+    text-align:center;
+    margin-top:0;
+}
+
+.remit-subtitle{
+    text-align:center;
+    color:#666;
+    font-size:14px;
+    margin-bottom:20px;
+}
+
+.final-money-box{
+    background:#e3f2fd;
+    border:3px solid #1976d2;
+    border-radius:12px;
+    padding:16px;
+    margin-bottom:20px;
+}
+
+.final-money-box h2{
+    margin:0 0 10px;
+    text-align:center;
+    color:#1565c0;
+}
+
+.final-money-box input{
+    font-size:24px;
+    font-weight:bold;
+    text-align:center;
+    padding:15px;
+}
+
+.final-money-note{
+    font-size:13px;
+    color:#555;
+    line-height:1.6;
+    margin-top:12px;
+}
+
+.overall-status{
+    background:#222;
+    color:#fff;
+    border-radius:12px;
+    padding:18px;
+    margin-bottom:20px;
+    text-align:center;
+}
+
+.overall-status h2{
+    margin:0 0 12px;
+}
+
+.overall-status .big{
+    font-size:30px;
+    font-weight:bold;
+}
+
+.remit-line{
+    border:3px solid #222;
+    border-radius:12px;
+    padding:15px;
+    margin-bottom:20px;
+}
+
+.remit-line h2{
+    background:#222;
+    color:#fff;
+    text-align:center;
+    padding:12px;
+    border-radius:8px;
+    margin-top:0;
+}
+
+.amount-source{
+    background:#e3f2fd;
+    border:2px solid #90caf9;
+    padding:12px;
+    border-radius:8px;
+    margin-bottom:15px;
+}
+
+.amount-source strong{
+    font-size:20px;
+}
+
+.cash-remit{
+    background:#f8f8f8;
+    border:2px solid #ddd;
+    border-radius:10px;
+    padding:14px;
+    margin-bottom:15px;
+}
+
+.cash-remit h3{
+    margin-top:0;
+    text-align:center;
+}
+
+.cash-total{
+    background:#e8f5e9;
+    border:2px solid #81c784;
+    padding:12px;
+    border-radius:8px;
+    margin-top:12px;
+}
+
+.cash-total strong{
+    font-size:20px;
+}
+
+.adjustment{
+    border-radius:10px;
+    padding:14px;
+    margin-bottom:12px;
+}
+
+.po{
+    background:#fff4c2;
+    border:2px solid #e0c45c;
+}
+
+.non-cash{
+    background:#dff5e4;
+    border:2px solid #8bc99a;
+}
+
+.adjustment h3{
+    margin-top:0;
+}
+
+.calculation{
+    background:#f5f5f5;
+    border-radius:10px;
+    padding:14px;
+    margin-top:15px;
+}
+
+.calc-row{
+    display:flex;
+    justify-content:space-between;
+    padding:8px 0;
+    border-bottom:1px solid #ddd;
+}
+
+.calc-row:last-child{
+    border-bottom:none;
+}
+
+.minus{
+    color:#c62828;
+}
+
+.plus{
+    color:#087f23;
+}
+
+.variance{
+    margin-top:12px;
+    padding:15px;
+    border-radius:10px;
+    text-align:center;
+    background:#222;
+    color:#fff;
+}
+
+.variance-label{
+    font-size:14px;
+}
+
+.variance-value{
+    font-size:28px;
+    font-weight:bold;
+    margin-top:5px;
+}
+
+.short-box{
+    margin-top:12px;
+    padding:14px;
+    background:#ffebee;
+    border:2px solid #ef9a9a;
+    border-radius:9px;
+    color:#b71c1c;
+    font-weight:bold;
+}
+
+.remaining-box{
+    margin-top:12px;
+    padding:14px;
+    background:#e8f5e9;
+    border:2px solid #81c784;
+    border-radius:9px;
+    color:#1b5e20;
+    font-weight:bold;
+}
+
+.carry-box{
+    margin-top:12px;
+    padding:14px;
+    background:#fff3e0;
+    border:2px solid #ffb74d;
+    border-radius:9px;
+    color:#e65100;
+    font-weight:bold;
+}
+
+.final-allocation{
+    background:#f5f5f5;
+    border:2px solid #ddd;
+    border-radius:10px;
+    padding:14px;
+    margin-bottom:20px;
+}
+
+.final-allocation h3{
+    text-align:center;
+    margin-top:0;
+}
+
+.allocation-row{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    padding:10px 0;
+    border-bottom:1px solid #ddd;
+}
+
+.allocation-row:last-child{
+    border-bottom:none;
+}
+
+.allocation-row strong{
+    font-size:18px;
+}
+
+.remit-grand{
+    background:#222;
+    color:#fff;
+    border-radius:10px;
+    padding:18px;
+    text-align:center;
+}
+
+.remit-grand h2{
+    margin-top:0;
+}
+
+.grand-row{
+    display:flex;
+    justify-content:space-between;
+    padding:8px 0;
+    border-bottom:1px solid #555;
+}
+
+.grand-row:last-of-type{
+    border-bottom:none;
+}
+
+.final-value{
+    font-size:30px;
+    font-weight:bold;
+    margin-top:8px;
+}
+
+.reset-remit{
+    width:100%;
+    padding:14px;
+    margin-top:15px;
+    border:none;
+    border-radius:8px;
+    background:#ddd;
+    font-size:17px;
+    font-weight:bold;
+}
+
+/* =====================================================
+   PRICE CHECKER
+===================================================== */
+
+.checker-box{
+    max-width:600px;
+    margin:auto;
+}
+
+.checker-title{
+    text-align:center;
+    margin-bottom:5px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#666;
+    margin-bottom:20px;
+}
+
+.card{
+    background:#fff;
+    padding:15px;
+    margin-bottom:15px;
+    border-radius:12px;
+    box-shadow:0 2px 8px #0002;
+}
+
+.card h2{
+    margin-top:0;
+}
+
+.price-row{
+    display:grid;
+    grid-template-columns:90px 1fr;
+    gap:10px;
+    align-items:center;
+    margin-bottom:10px;
+}
+
+.price-row input{
+    padding:12px;
+    font-size:20px;
+}
+
+.check-button{
+    width:100%;
+    padding:14px;
+    margin-top:10px;
+    border:none;
+    border-radius:8px;
+    background:#1976d2;
+    color:#fff;
+    font-size:18px;
+    font-weight:bold;
+}
+
+.missing{
+    font-size:28px;
+    font-weight:bold;
+    letter-spacing:5px;
+    margin-top:8px;
+}
+
+.available{
+    color:#087f23;
+    font-size:18px;
+    font-weight:bold;
+}
+
+.note{
+    font-size:14px;
+    color:#666;
+    line-height:1.5;
+}
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:500px){
+
+    .row{
+        flex-direction:column;
+    }
+
+    .remit-box{
+        padding:12px;
+    }
+
+    .remit-line{
+        padding:10px;
+    }
+
+    .allocation-row,
+    .grand-row{
+        flex-direction:column;
+        gap:4px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<div class="header">
+
+    <button class="menu-btn"
+            onclick="toggleMenu()">
+        ☰
+    </button>
+
+    <div class="header-title">
+        JGM Fuel App
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     HAMBURGER MENU
+===================================================== -->
+
+<div class="side-menu" id="sideMenu">
+
+    <h2>MENU</h2>
+
+    <button class="menu-item"
+            onclick="showPage('remittance')">
+        ⛽ JGM Amount Calculator
+    </button>
+
+    <button class="menu-item"
+            onclick="showPage('remittanceMoney')">
+        💵 Remittance Money Calculator
+    </button>
+
+    <button class="menu-item"
+            onclick="showPage('checker')">
+        🔢 Fuel Price Digit Checker
+    </button>
+
+    <hr>
+
+    <button class="menu-item"
+            onclick="resetAllApp()"
+            style="background:#ffebee;color:#c62828;">
+        🗑️ RESET ALL
+    </button>
+
+    <div class="developer-card">
+
+        <div class="developer-icon">
+            L
+        </div>
+
+        <div class="developer-info">
+
+            <span class="developer-label">
+                DEVELOPED BY
+            </span>
+
+            <span class="developer-name">
+                LMLUARES
+            </span>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="page">
+<div class="container">
+
+
+<!-- =====================================================
+     AMOUNT CALCULATOR
+===================================================== -->
+
+<div id="remittance"
+     class="app-page active">
+
+<div class="calculator-box">
+
+<h1>⛽ JGM Amount Calculator</h1>
+
+
+<!-- PUMP 1 -->
+
+<div class="pump-box">
+
+<h2 class="pump-title">
+PUMP 1
+</h2>
+
+
+<!-- LINE 1 -->
+
+<div class="line-box">
+
+<h2 class="line-title">
+LINE 1 — D / U / P
+</h2>
+
+
+<!-- DIESEL -->
+
+<div class="fuel diesel">
+
+<h3>D — Diesel</h3>
+
+<div class="row">
+
+<div class="field">
+
+<label>Beginning</label>
+
+<input type="number"
+       id="p1l1_dbeg"
+       step="0.01"
+       oninput="remittanceCalculate()">
+
+</div>
+
+<div class="field">
+
+<label>Ending</label>
+
+<input type="number"
+       id="p1l1_dend"
+       step="0.01"
+       oninput="remittanceCalculate()">
+
+</div>
+
+</div>
+
+<label>Price / Liter</label>
+
+<input type="number"
+       id="p1l1_dprice"
+       step="0.01"
+       oninput="remittanceCalculate()">
+
+<div class="result-box">
+Variance:
+<strong id="p1l1_dvar">0.00 L</strong>
+</div>
+
+<div class="result-box">
+Amount:
+<span class="amount"
+      id="p1l1_damount">
+₱0.00
+</span>
+</div>
+
+</div>
+
+
+<!-- UNLEADED -->
+
+<div class="fuel unleaded">
+
+<h3>U — Unleaded</h3>
+
+<div class="row">
+
+<div class="field">
+
+<label>Beginning</label>
+
+<input type="number"
+       id="p1l1_ubeg"
+       step="0.01"
+       oninput="remittanceCalculate()">
+
+</div>
+
+<div class="field">
+
+<label>Ending</label>
+
+<input type="number"
+       id="p1l1_uend"
+       step="0.01"
+       oninput="remittanceCalculate()">
+
+</div>
+
+</div>
+
+<label>Price / Liter</label>
+
+<input type="number"
+       id="p1l1_uprice"
+       step="0.01"
+       oninput="remittanceCalculate()">
+
+<div class="result-box">
+Variance:
+<strong id="p1l1_uvar">0.00 L</strong>
+</div>
+
+<div class="result-box">
+Amount:
+<span class="amount"
+      id="p1l1_uamount">
+₱0.00
+</span>
+</div>
+
+</div>
+
+
+<!-- PREMIUM -->
+
+<div class="fuel premium">
+
+<h3>P — Premium</h3>
+
+<div class="row">
+
+<div class="field">
+
+<label>Beginning</label>
+
+<input type="number"
+       id="p1l1_pbeg"
+       step="0.01"
+       oninput="remittanceCalculate()">
+
+</div>
+
+<div class="field">
+
+<label>Ending</label>
+
+<input type="number"
+       id="p1l1_pend"
+       step="0.01"
+       oninput="remittanceCalculate()">
+
+</div>
+
+</div>
+
+<label>Price / Liter</label>
+
+<input type="number"
+       id="p1l1_pprice"
+       step="0.01"
+       oninput="remittanceCalculate()">
+
+<div class="result-box">
+Variance:
+<strong id="p1l1_pvar">0.00 L</strong>
+</div>
+
+<div class="result-box">
+Amount:
+<span class="amount"
+      id="p1l1_pamount">
+₱0.00
+</span>
+</div>
+
+</div>
+
+
+<div class="line-total">
+LINE 1 TOTAL<br>
+<strong id="p1l1_total">₱0.00</strong>
+</div>
+
+</div>
+
+
+<!-- LINE 2 -->
+
+<div class="line-box">
+
+<h2 class="line-title">
+LINE 2 — D / U / P
+</h2>
+
+
+<!-- DIESEL -->
+
+<div class="fuel diesel">
+
+<h3>D — Diesel</h3>
+
+<div class="row">
+
+<div class="field">
+
+<label>Beginning</label>
+
+<input type="number"
+       id="p1l2_dbeg"
+       step="0.01"
+       oninput="remittanceCalculate()">
+
+</div>
+
+<div class="field">
+
+<label>Ending</label>
+
+<input type="number"
+       id="p1l2_dend"
+       step="0.01"
+       oninput="remittanceCalculate()">
+
+</div>
+
+</div>
+
+<label>Price / Liter</label>
+
+<input type="number"
+       id="p1l2_dprice"
+       step="0.01"
+       oninput="remittanceCalculate()">
+
+<div class="result-box">
+Variance:
+<strong id="p1l2_dvar">0.00 L</strong>
+</div>
+
+<div class="result-box">
+Amount:
+<span class="amount"
+      id="p1l2_damount">
+₱0.00
+</span>
+</div>
+
+</div>
+
+
+<!-- UNLEADED -->
+
+<div class="fuel unleaded">
+
+<h3>U — Unleaded</h3>
+
+<div class="row">
+
+<div class="field">
+
+<label>Beginning</label>
+
+<input type="number"
+       id="p1l2_ubeg"
+       step="0.01"
+       oninput="remittanceCalculate()">
+
+</div>
+
+<div class="field">
+
+<label>Ending</label>
+
+<input type="number"
+       id="p1l2_uend"
+       step="0.01"
+       oninput="remittanceCalculate()">
+
+</div>
+
+</div>
+
+<label>Price / Liter</label>
+
+<input type="number"
+       id="p1l2_uprice"
+       step="0.01"
+       oninput="remittanceCalculate()">
+
+<div class="result-box">
+Variance:
+<strong id="p1l2_uvar">0.00 L</strong>
+</div>
+
+<div class="result-box">
+Amount:
+<span class="amount"
+      id="p1l2_uamount">
+₱0.00
+</span>
+</div>
+
+</div>
+
+
+<!-- PREMIUM -->
+
+<div class="fuel premium">
+
+<h3>P — Premium</h3>
+
+<div class="row">
+
+<div class="field">
+
+<label>Beginning</label>
+
+<input type="number"
+       id="p1l2_pbeg"
+       step="0.01"
+       oninput="remittanceCalculate()">
+
+</div>
+
+<div class="field">
+
+<label>Ending</label>
+
+<input type="number"
+       id="p1l2_pend"
+       step="0.01"
+       oninput="remittanceCalculate()">
+
+</div>
+
+</div>
+
+<label>Price / Liter</label>
+
+<input type="number"
+       id="p1l2_pprice"
+       step="0.01"
+       oninput="remittanceCalculate()">
+
+<div class="result-box">
+Variance:
+<strong id="p1l2_pvar">0.00 L</strong>
+</div>
+
+<div class="result-box">
+Amount:
+<span class="amount"
+      id="p1l2_pamount">
+₱0.00
+</span>
+</div>
+
+</div>
+
+
+<div class="line-total">
+LINE 2 TOTAL<br>
+<strong id="p1l2_total">₱0.00</strong>
+</div>
+
+</div>
+
+
+<div class="pump-total">
+
+<h3>PUMP 1 TOTAL</h3>
+
+<div class="pump-total-value"
+     id="pump1Total">
+₱0.00
+</div>
+
+</div>
+
+</div>
+
+
+<!-- PUMP 2 -->
+
+<div class="pump-box">
+
+<h2 class="pump-title">
+PUMP 2
+</h2>
+
+
+<div class="line-box">
+
+<h2 class="line-title">
+PUMP 2 — P / U
+</h2>
+
+
+<!-- PREMIUM -->
+
+<div class="fuel premium">
+
+<h3>P — Premium</h3>
+
+<div class="row">
+
+<div class="field">
+
+<label>Beginning</label>
+
+<input type="number"
+       id="p2_pbeg"
+       step="0.01"
+       oninput="remittanceCalculate()">
+
+</div>
+
+<div class="field">
+
+<label>Ending</label>
+
+<input type="number"
+       id="p2_pend"
+       step="0.01"
+       oninput="remittanceCalculate()">
+
+</div>
+
+</div>
+
+<label>Price / Liter</label>
+
+<input type="number"
+       id="p2_pprice"
+       step="0.01"
+       oninput="remittanceCalculate()">
+
+<div class="result-box">
+Variance:
+<strong id="p2_pvar">0.00 L</strong>
+</div>
+
+<div class="result-box">
+Amount:
+<span class="amount"
+      id="p2_pamount">
+₱0.00
+</span>
+</div>
+
+</div>
+
+
+<!-- UNLEADED -->
+
+<div class="fuel unleaded">
+
+<h3>U — Unleaded</h3>
+
+<div class="row">
+
+<div class="field">
+
+<label>Beginning</label>
+
+<input type="number"
+       id="p2_ubeg"
+       step="0.01"
+       oninput="remittanceCalculate()">
+
+</div>
+
+<div class="field">
+
+<label>Ending</label>
+
+<input type="number"
+       id="p2_uend"
+       step="0.01"
+       oninput="remittanceCalculate()">
+
+</div>
+
+</div>
+
+<label>Price / Liter</label>
+
+<input type="number"
+       id="p2_uprice"
+       step="0.01"
+       oninput="remittanceCalculate()">
+
+<div class="result-box">
+Variance:
+<strong id="p2_uvar">0.00 L</strong>
+</div>
+
+<div class="result-box">
+Amount:
+<span class="amount"
+      id="p2_uamount">
+₱0.00
+</span>
+</div>
+
+</div>
+
+
+<div class="line-total">
+PUMP 2 TOTAL<br>
+<strong id="pump2Total">₱0.00</strong>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="total">
+
+<h2>GRAND TOTAL</h2>
+
+<div id="grandTotal">
+₱0.00
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     LOCK / UNLOCK BEGINNING + PRICE
+===================================================== -->
+
+<button
+    class="lock-button unlocked"
+    id="lockBeginningPriceBtn"
+    onclick="toggleBeginningPriceLock()">
+
+    🔒 LOCK BEGINNING & PRICE/LITER
+
+</button>
+
+
+<button class="reset"
+        onclick="resetCalculator()">
+
+RESET AMOUNT CALCULATOR
+
+</button>
+
+</div>
+</div>
+
+
+<!-- =====================================================
+     REMITTANCE MONEY CALCULATOR
+===================================================== -->
+
+<div id="remittanceMoney"
+     class="app-page">
+
+<div class="remit-box">
+
+<h1 class="remit-title">
+💵 Create Remittance Money Calculator
+</h1>
+
+<div class="remit-subtitle">
+L1 + L2 cash remittance
+</div>
+
+
+<div class="final-money-box">
+
+<h2>💵 FINAL MIXED MONEY</h2>
+
+<label>
+Enter the last/final money you will remit for BOTH L1 + L2
+</label>
+
+<input
+    type="number"
+    id="finalMixedCash"
+    min="0"
+    step="0.01"
+    placeholder="₱0.00"
+    oninput="calculateRemittanceMoney()">
+
+<div class="final-money-note">
+
+<strong>Important:</strong>
+
+<br>
+
+• This is the money you have left for
+<strong>L1 + L2 combined</strong>.
+
+<br>
+
+• Do <strong>NOT</strong> enter it separately in L1 and L2.
+
+<br>
+
+• The app automatically uses it to cover remaining shortages.
+
+<br>
+
+• If L1 is short, the final money first covers L1.
+
+<br>
+
+• If L1 has sobra, the sobra automatically goes to L2.
+
+<br>
+
+• Final mixed money is counted
+<strong>ONLY ONCE</strong>.
+
+</div>
+
+</div>
+
+
+<div class="overall-status">
+
+<h2>COMBINED L1 + L2 VARIANCE</h2>
+
+<div class="big"
+     id="combinedVariance">
++₱0.00
+</div>
+
+<div id="combinedStatus">
+Enter remittance amounts.
+</div>
+
+</div>
+
+
+<div class="final-allocation">
+
+<h3>🎯 FINAL MIXED MONEY ALLOCATION</h3>
+
+<div class="allocation-row">
+
+<span>Final Mixed Money</span>
+
+<strong id="finalMixedDisplay">
+₱0.00
+</strong>
+
+</div>
+
+<div class="allocation-row">
+
+<span>Final Money → L1</span>
+
+<strong id="finalToL1">
+₱0.00
+</strong>
+
+</div>
+
+<div class="allocation-row">
+
+<span>Final Money → L2</span>
+
+<strong id="finalToL2">
+₱0.00
+</strong>
+
+</div>
+
+<div class="allocation-row">
+
+<span>Total Final Money Used</span>
+
+<strong id="finalUsed">
+₱0.00
+</strong>
+
+</div>
+
+<div class="allocation-row">
+
+<span>Final Money Remaining</span>
+
+<strong id="finalRemaining">
+₱0.00
+</strong>
+
+</div>
+
+</div>
+
+
+<!-- LINE 1 -->
+
+<div class="remit-line">
+
+<h2>LINE 1</h2>
+
+<div class="amount-source">
+
+Total Amount from Amount Calculator:
+
+<br>
+
+<strong id="moneyL1Amount">
+₱0.00
+</strong>
+
+</div>
+
+
+<div class="cash-remit">
+
+<h3>💵 CASH REMITTANCE</h3>
+
+<label>
+Each Remittance = ₱500 × Number of Remittances
+</label>
+
+<input
+    type="number"
+    id="l1_remittanceCount"
+    min="0"
+    max="100"
+    step="1"
+    placeholder="Enter number (0–100)"
+    oninput="calculateRemittanceMoney()">
+
+<div class="small-note">
+Maximum: 100 remittances × ₱500
+</div>
+
+<br>
+
+<label>
+Last Remittance — less than ₱500
+</label>
+
+<input
+    type="number"
+    id="l1_lastRemittance"
+    min="0"
+    max="499.99"
+    step="0.01"
+    placeholder="₱0.00"
+    oninput="calculateRemittanceMoney()">
+
+<div class="small-note">
+Last remittance must be less than ₱500.
+</div>
+
+<div class="cash-total">
+
+₱500 Remittances:
+
+<strong id="l1_500Total">
+₱0.00
+</strong>
+
+<br><br>
+
+L1 Normal Cash:
+
+<strong id="l1_normalCash">
+₱0.00
+</strong>
+
+</div>
+
+</div>
+
+
+<div class="adjustment po">
+
+<h3>📄 Purchase Order</h3>
+
+<label>
+PO Amount — receipt only / no cash received
+</label>
+
+<input
+    type="number"
+    id="l1_po"
+    min="0"
+    step="0.01"
+    placeholder="₱0.00"
+    oninput="calculateRemittanceMoney()">
+
+</div>
+
+
+<div class="adjustment non-cash">
+
+<h3>🧾 Non-Cash</h3>
+
+<label>
+Non-Cash Amount — receipt only / no cash received
+</label>
+
+<input
+    type="number"
+    id="l1_noncash"
+    min="0"
+    step="0.01"
+    placeholder="₱0.00"
+    oninput="calculateRemittanceMoney()">
+
+</div>
+
+
+<div class="calculation">
+
+<div class="calc-row">
+<span>Amount Required</span>
+<strong class="minus" id="l1_required">₱0.00</strong>
+</div>
+
+<div class="calc-row">
+<span>Normal Cash</span>
+<strong class="plus" id="l1_calcCash">₱0.00</strong>
+</div>
+
+<div class="calc-row">
+<span>Final Money Added</span>
+<strong class="plus" id="l1_calcFinal">₱0.00</strong>
+</div>
+
+<div class="calc-row">
+<span>Purchase Order</span>
+<strong class="plus" id="l1_calcPO">₱0.00</strong>
+</div>
+
+<div class="calc-row">
+<span>Non-Cash</span>
+<strong class="plus" id="l1_calcNonCash">₱0.00</strong>
+</div>
+
+</div>
+
+
+<div class="variance">
+
+<div class="variance-label">
+L1 VARIANCE
+</div>
+
+<div class="variance-value"
+     id="l1_variance">
++₱0.00
+</div>
+
+</div>
+
+
+<div class="short-box"
+     id="l1_short"
+     style="display:none;">
+</div>
+
+<div class="remaining-box"
+     id="l1_remaining"
+     style="display:none;">
+</div>
+
+<div class="carry-box"
+     id="l1_carry"
+     style="display:none;">
+</div>
+
+</div>
+
+
+<!-- LINE 2 -->
+
+<div class="remit-line">
+
+<h2>LINE 2</h2>
+
+<div class="amount-source">
+
+Total Amount from Amount Calculator:
+
+<br>
+
+<strong id="moneyL2Amount">
+₱0.00
+</strong>
+
+</div>
+
+
+<div class="carry-box"
+     id="l2_l1Transfer">
+
+L1 Excess → L2:
+
+<strong id="l2_l1TransferValue">
+₱0.00
+</strong>
+
+</div>
+
+
+<div class="cash-remit">
+
+<h3>💵 CASH REMITTANCE</h3>
+
+<label>
+Each Remittance = ₱500 × Number of Remittances
+</label>
+
+<input
+    type="number"
+    id="l2_remittanceCount"
+    min="0"
+    max="100"
+    step="1"
+    placeholder="Enter number (0–100)"
+    oninput="calculateRemittanceMoney()">
+
+<div class="small-note">
+Maximum: 100 remittances × ₱500
+</div>
+
+<br>
+
+<label>
+Last Remittance — less than ₱500
+</label>
+
+<input
+    type="number"
+    id="l2_lastRemittance"
+    min="0"
+    max="499.99"
+    step="0.01"
+    placeholder="₱0.00"
+    oninput="calculateRemittanceMoney()">
+
+<div class="small-note">
+Last remittance must be less than ₱500.
+</div>
+
+<div class="cash-total">
+
+₱500 Remittances:
+
+<strong id="l2_500Total">
+₱0.00
+</strong>
+
+<br><br>
+
+L2 Normal Cash:
+
+<strong id="l2_normalCash">
+₱0.00
+</strong>
+
+<br><br>
+
+L1 Excess Added:
+
+<strong id="l2_l1Excess">
+₱0.00
+</strong>
+
+<br><br>
+
+L2 Cash Before Final Money:
+
+<strong id="l2_cashBeforeFinal">
+₱0.00
+</strong>
+
+</div>
+
+</div>
+
+
+<div class="adjustment po">
+
+<h3>📄 Purchase Order</h3>
+
+<label>
+PO Amount — receipt only / no cash received
+</label>
+
+<input
+    type="number"
+    id="l2_po"
+    min="0"
+    step="0.01"
+    placeholder="₱0.00"
+    oninput="calculateRemittanceMoney()">
+
+</div>
+
+
+<div class="adjustment non-cash">
+
+<h3>🧾 Non-Cash</h3>
+
+<label>
+Non-Cash Amount — receipt only / no cash received
+</label>
+
+<input
+    type="number"
+    id="l2_noncash"
+    min="0"
+    step="0.01"
+    placeholder="₱0.00"
+    oninput="calculateRemittanceMoney()">
+
+</div>
+
+
+<div class="calculation">
+
+<div class="calc-row">
+<span>Amount Required</span>
+<strong class="minus" id="l2_required">₱0.00</strong>
+</div>
+
+<div class="calc-row">
+<span>Normal Cash</span>
+<strong class="plus" id="l2_calcCash">₱0.00</strong>
+</div>
+
+<div class="calc-row">
+<span>L1 Excess</span>
+<strong class="plus" id="l2_calcL1Excess">₱0.00</strong>
+</div>
+
+<div class="calc-row">
+<span>Final Money Added</span>
+<strong class="plus" id="l2_calcFinal">₱0.00</strong>
+</div>
+
+<div class="calc-row">
+<span>Purchase Order</span>
+<strong class="plus" id="l2_calcPO">₱0.00</strong>
+</div>
+
+<div class="calc-row">
+<span>Non-Cash</span>
+<strong class="plus" id="l2_calcNonCash">₱0.00</strong>
+</div>
+
+</div>
+
+
+<div class="variance">
+
+<div class="variance-label">
+L2 VARIANCE
+</div>
+
+<div class="variance-value"
+     id="l2_variance">
++₱0.00
+</div>
+
+</div>
+
+
+<div class="short-box"
+     id="l2_short"
+     style="display:none;">
+</div>
+
+<div class="remaining-box"
+     id="l2_remaining"
+     style="display:none;">
+</div>
+
+</div>
+
+
+<!-- GRAND -->
+
+<div class="remit-grand">
+
+<h2>L1 + L2 REMITTANCE SUMMARY</h2>
+
+<div class="grand-row">
+<span>L1 Amount</span>
+<strong id="grandL1Amount">₱0.00</strong>
+</div>
+
+<div class="grand-row">
+<span>L2 Amount</span>
+<strong id="grandL2Amount">₱0.00</strong>
+</div>
+
+<div class="grand-row">
+<span>Total Amount</span>
+<strong id="grandAmount">₱0.00</strong>
+</div>
+
+<br>
+
+<div class="grand-row">
+<span>L1 Normal Cash</span>
+<strong id="grandL1Cash">₱0.00</strong>
+</div>
+
+<div class="grand-row">
+<span>L2 Normal Cash</span>
+<strong id="grandL2Cash">₱0.00</strong>
+</div>
+
+<div class="grand-row">
+<span>L1 Excess → L2</span>
+<strong id="grandCarry">₱0.00</strong>
+</div>
+
+<div class="grand-row">
+<span>Final Mixed Money</span>
+<strong id="grandFinalMoney">₱0.00</strong>
+</div>
+
+<div class="grand-row">
+<span>Final Money → L1</span>
+<strong id="grandFinalL1">₱0.00</strong>
+</div>
+
+<div class="grand-row">
+<span>Final Money → L2</span>
+<strong id="grandFinalL2">₱0.00</strong>
+</div>
+
+<div class="grand-row">
+<span>Total Cash Remitted</span>
+<strong id="grandCash">₱0.00</strong>
+</div>
+
+<div class="grand-row">
+<span>Total PO</span>
+<strong id="grandPO">₱0.00</strong>
+</div>
+
+<div class="grand-row">
+<span>Total Non-Cash</span>
+<strong id="grandNonCash">₱0.00</strong>
+</div>
+
+<hr>
+
+<div>
+FINAL COMBINED VARIANCE
+</div>
+
+<div class="final-value"
+     id="grandVariance">
++₱0.00
+</div>
+
+</div>
+
+
+<button class="reset-remit"
+        onclick="resetRemittanceMoney()">
+RESET REMITTANCE MONEY
+</button>
+
+</div>
+</div>
+
+
+<!-- =====================================================
+     PRICE CHECKER
+===================================================== -->
+
+<div id="checker"
+     class="app-page">
+
+<div class="checker-box">
+
+<h1 class="checker-title">
+⛽ Fuel Price Digit Checker
+</h1>
+
+<div class="subtitle">
+Diesel • Unleaded • Premium
+</div>
+
+
+<div class="card">
+
+<h2>OLD PRICE</h2>
+
+<div class="price-row">
+<label>Diesel D</label>
+<input id="oldD"
+       type="text"
+       placeholder="Enter old price">
+</div>
+
+<div class="price-row">
+<label>Unleaded U</label>
+<input id="oldU"
+       type="text"
+       placeholder="Enter old price">
+</div>
+
+<div class="price-row">
+<label>Premium P</label>
+<input id="oldP"
+       type="text"
+       placeholder="Enter old price">
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>NEW PRICE</h2>
+
+<div class="price-row">
+<label>Diesel D</label>
+<input id="newD"
+       type="text"
+       placeholder="Enter new price">
+</div>
+
+<div class="price-row">
+<label>Unleaded U</label>
+<input id="newU"
+       type="text"
+       placeholder="Enter new price">
+</div>
+
+<div class="price-row">
+<label>Premium P</label>
+<input id="newP"
+       type="text"
+       placeholder="Enter new price">
+</div>
+
+<button class="check-button"
+        onclick="digitCheckerCalculate()">
+CHECK MISSING DIGITS
+</button>
+
+</div>
+
+
+<div class="card">
+
+<h2>RESULT</h2>
+
+<div id="digitResult">
+Enter the prices and press the button.
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>ℹ️ How it works</h2>
+
+<p class="note">
+The app checks the digits required by the
+<strong>NEW prices</strong>
+against the digits available from the
+<strong>OLD prices</strong>.
+</p>
+
+<p class="note">
+
+<strong>Important:</strong>
+6 and 9 are treated as the same digit because
+you can turn a 6 into a 9 and vice versa.
+
+</p>
+
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+
+
+<script>
+
+/* =====================================================
+   STORAGE
+===================================================== */
+
+const STORAGE_KEY="JGM_FUEL_APP_DATA_V2";
+
+/* NEW:
+   Separate storage key for the lock.
+   This means the lock remains active even
+   when normal app data is saved/loaded.
+*/
+const LOCK_KEY="JGM_FUEL_BEGINNING_PRICE_LOCK";
+
+
+/* =====================================================
+   SAVE APP DATA
+===================================================== */
+
+function saveAppData(){
+
+    const fields=
+        document.querySelectorAll("input,select");
+
+    const data={};
+
+    fields.forEach(function(field){
+
+        if(field.id){
+
+            data[field.id]=field.value;
+
+        }
+
+    });
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(data)
+    );
+}
+
+
+/* =====================================================
+   LOAD APP DATA
+===================================================== */
+
+function loadAppData(){
+
+    const saved=
+        localStorage.getItem(STORAGE_KEY);
+
+    if(!saved){
+
+        remittanceCalculate(false);
+        calculateRemittanceMoney();
+
+        return;
+
+    }
+
+    try{
+
+        const data=
+            JSON.parse(saved);
+
+        Object.keys(data)
+            .forEach(function(id){
+
+                const element=
+                    document.getElementById(id);
+
+                if(element){
+
+                    element.value=data[id];
+
+                }
+
+            });
+
+        remittanceCalculate(false);
+        calculateRemittanceMoney();
+
+    }catch(error){
+
+        console.log(
+            "Saved data could not be restored."
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   BEGINNING + PRICE LOCK
+===================================================== */
+
+/*
+   Finds ONLY Beginning and Price/Liter inputs
+   inside the Amount Calculator.
+
+   Ending fields are NOT included.
+*/
+
+function getBeginningPriceFields(){
+
+    const fields=[];
+
+    document
+        .querySelectorAll("#remittance input")
+        .forEach(function(input){
+
+            const id=
+                input.id || "";
+
+            if(
+                id.includes("beg") ||
+                id.includes("price")
+            ){
+
+                fields.push(input);
+
+            }
+
+        });
+
+    return fields;
+
+}
+
+
+/*
+   Apply locked/unlocked appearance
+*/
+
+function setBeginningPriceLock(locked){
+
+    const fields=
+        getBeginningPriceFields();
+
+
+    fields.forEach(function(input){
+
+        input.readOnly=
+            locked;
+
+
+        if(locked){
+
+            input.classList.add(
+                "beginning-price-locked"
+            );
+
+        }else{
+
+            input.classList.remove(
+                "beginning-price-locked"
+            );
+
+        }
+
+    });
+
+
+    const button=
+        document.getElementById(
+            "lockBeginningPriceBtn"
+        );
+
+
+    if(!button)return;
+
+
+    if(locked){
+
+        button.textContent=
+            "🔒 BEGINNING & PRICE/LITER LOCKED";
+
+        button.classList.remove(
+            "unlocked"
+        );
+
+        button.classList.add(
+            "locked"
+        );
+
+    }else{
+
+        button.textContent=
+            "🔓 UNLOCK BEGINNING & PRICE/LITER";
+
+        button.classList.remove(
+            "locked"
+        );
+
+        button.classList.add(
+            "unlocked"
+        );
+
+    }
+
+
+    localStorage.setItem(
+        LOCK_KEY,
+        locked ? "true" : "false"
+    );
+
+}
+
+
+/*
+   Button function
+*/
+
+function toggleBeginningPriceLock(){
+
+    const currentlyLocked=
+        localStorage.getItem(
+            LOCK_KEY
+        ) === "true";
+
+
+    /* =========================
+       UNLOCK
+    ========================= */
+
+    if(currentlyLocked){
+
+        const confirmUnlock=
+            confirm(
+
+                "🔓 UNLOCK BEGINNING & PRICE/LITER?\n\n"+
+                "You can edit all Beginning and "+
+                "Price/Liter values again."
+
+            );
+
+
+        if(!confirmUnlock)return;
+
+
+        setBeginningPriceLock(false);
+
+        return;
+
+    }
+
+
+    /* =========================
+       LOCK
+    ========================= */
+
+    const confirmLock=
+        confirm(
+
+            "🔒 LOCK BEGINNING & PRICE/LITER?\n\n"+
+            "Beginning and Price/Liter values "+
+            "will no longer be editable.\n\n"+
+            "Ending values will remain editable."
+
+        );
+
+
+    if(!confirmLock)return;
+
+
+    setBeginningPriceLock(true);
+
+}
+
+
+/*
+   Restore lock after app opens
+*/
+
+function loadBeginningPriceLock(){
+
+    const locked=
+        localStorage.getItem(
+            LOCK_KEY
+        ) === "true";
+
+
+    setBeginningPriceLock(
+        locked
+    );
+
+}
+
+
+/* =====================================================
+   MENU
+===================================================== */
+
+function toggleMenu(){
+
+    document
+        .getElementById("sideMenu")
+        .classList.toggle("open");
+
+}
+
+
+function showPage(page){
+
+    document
+        .querySelectorAll(".app-page")
+        .forEach(function(element){
+
+            element.classList.remove("active");
+
+        });
+
+    document
+        .getElementById(page)
+        .classList.add("active");
+
+    document
+        .getElementById("sideMenu")
+        .classList.remove("open");
+
+}
+
+
+/* =====================================================
+   RESET ALL
+===================================================== */
+
+function resetAllApp(){
+
+    const confirmReset=
+        confirm(
+
+            "⚠️ RESET ALL DATA?\n\n"+
+            "This will clear ALL entered data from:\n\n"+
+            "• Amount Calculator\n"+
+            "• Remittance Money Calculator\n"+
+            "• L1 Remittance\n"+
+            "• L2 Remittance\n"+
+            "• Final Mixed Money\n"+
+            "• Fuel Price Digit Checker\n"+
+            "• Beginning & Price/Liter Lock\n\n"+
+            "This cannot be undone."
+
+        );
+
+
+    if(!confirmReset)return;
+
+
+    document
+        .querySelectorAll("input,select")
+        .forEach(function(field){
+
+            field.value="";
+
+        });
+
+
+    localStorage.removeItem(
+        STORAGE_KEY
+    );
+
+
+    /* IMPORTANT:
+       RESET ALL also removes the lock.
+    */
+
+    localStorage.removeItem(
+        LOCK_KEY
+    );
+
+
+    setBeginningPriceLock(false);
+
+
+    const digitResult=
+        document.getElementById(
+            "digitResult"
+        );
+
+
+    if(digitResult){
+
+        digitResult.innerHTML=
+            "Enter the prices and press the button.";
+
+    }
+
+
+    remittanceCalculate(false);
+    calculateRemittanceMoney();
+
+
+    document
+        .getElementById("sideMenu")
+        .classList.remove("open");
+
+
+    showPage("remittance");
+
+
+    alert(
+        "✅ All app data has been reset."
+    );
+
+}
+
+
+/* =====================================================
+   NUMBER
+===================================================== */
+
+function getNumber(id){
+
+    const element=
+        document.getElementById(id);
+
+    if(!element)return 0;
+
+    return parseFloat(element.value)||0;
+
+}
+
+
+/* =====================================================
+   MONEY
+===================================================== */
+
+function money(value){
+
+    return "₱"+
+        Number(value).toLocaleString(
+            "en-PH",
+            {
+                minimumFractionDigits:2,
+                maximumFractionDigits:2
+            }
+        );
+
+}
+
+
+/* =====================================================
+   FUEL CALCULATOR
+===================================================== */
+
+function calculateFuel(prefix,fuel){
+
+    const beginning=
+        getNumber(
+            prefix+"_"+fuel+"beg"
+        );
+
+    const ending=
+        getNumber(
+            prefix+"_"+fuel+"end"
+        );
+
+    const price=
+        getNumber(
+            prefix+"_"+fuel+"price"
+        );
+
+
+    const variance=
+        ending-beginning;
+
+
+    const amount=
+        variance*price;
+
+
+    document
+        .getElementById(
+            prefix+"_"+fuel+"var"
+        )
+        .textContent=
+        variance.toFixed(2)+" L";
+
+
+    document
+        .getElementById(
+            prefix+"_"+fuel+"amount"
+        )
+        .textContent=
+        money(amount);
+
+
+    return amount;
+
+}
+
+
+function calculateLine(prefix,fuels){
+
+    let total=0;
+
+
+    fuels.forEach(function(fuel){
+
+        total+=
+            calculateFuel(
+                prefix,
+                fuel
+            );
+
+    });
+
+
+    document
+        .getElementById(prefix+"_total")
+        .textContent=
+        money(total);
+
+
+    return total;
+
+}
+
+
+/* =====================================================
+   AMOUNT CALCULATOR
+===================================================== */
+
+function remittanceCalculate(save=true){
+
+    const p1l1=
+        calculateLine(
+            "p1l1",
+            ["d","u","p"]
+        );
+
+
+    const p1l2=
+        calculateLine(
+            "p1l2",
+            ["d","u","p"]
+        );
+
+
+    const pump1=
+        p1l1+p1l2;
+
+
+    document
+        .getElementById("pump1Total")
+        .textContent=
+        money(pump1);
+
+
+    const p2p=
+        calculateFuel(
+            "p2",
+            "p"
+        );
+
+
+    const p2u=
+        calculateFuel(
+            "p2",
+            "u"
+        );
+
+
+    const pump2=
+        p2p+p2u;
+
+
+    document
+        .getElementById("pump2Total")
+        .textContent=
+        money(pump2);
+
+
+    const grandTotal=
+        pump1+pump2;
+
+
+    document
+        .getElementById("grandTotal")
+        .textContent=
+        money(grandTotal);
+
+
+    if(save){
+
+        saveAppData();
+
+    }
+
+
+    calculateRemittanceMoney();
+
+}
+
+
+/* =====================================================
+   RESET AMOUNT CALCULATOR
+===================================================== */
+
+function resetCalculator(){
+
+    const confirmReset=
+        confirm(
+
+            "⚠️ RESET AMOUNT CALCULATOR?\n\n"+
+            "This will clear the Beginning, Ending "+
+            "and Price/Liter values.\n\n"+
+            "The Beginning & Price/Liter lock "+
+            "will also be removed."
+
+        );
+
+
+    if(!confirmReset)return;
+
+
+    document
+        .querySelectorAll(
+            "#remittance input"
+        )
+        .forEach(function(input){
+
+            input.value="";
+
+        });
+
+
+    /* Unlock after calculator reset */
+
+    localStorage.removeItem(
+        LOCK_KEY
+    );
+
+    setBeginningPriceLock(false);
+
+
+    remittanceCalculate();
+
+}
+
+
+/* =====================================================
+   GET LINE AMOUNTS
+===================================================== */
+
+function getLine1Amount(){
+
+    const element=
+        document.getElementById(
+            "p1l1_total"
+        );
+
+
+    if(!element)return 0;
+
+
+    return parseFloat(
+        element.textContent
+            .replace(/[₱,]/g,"")
+    )||0;
+
+}
+
+
+function getLine2Amount(){
+
+    const element=
+        document.getElementById(
+            "p1l2_total"
+        );
+
+
+    if(!element)return 0;
+
+
+    return parseFloat(
+        element.textContent
+            .replace(/[₱,]/g,"")
+    )||0;
+
+}
+
+
+/* =====================================================
+   REMITTANCE COUNT
+===================================================== */
+
+function getRemittanceCount(id){
+
+    const element=
+        document.getElementById(id);
+
+
+    if(!element)return 0;
+
+
+    let value=
+        parseInt(element.value)||0;
+
+
+    if(value<0){
+
+        value=0;
+        element.value=0;
+
+    }
+
+
+    if(value>100){
+
+        value=100;
+        element.value=100;
+
+    }
+
+
+    return value;
+
+}
+
+
+/* =====================================================
+   LAST REMITTANCE
+===================================================== */
+
+function getLastMoney(id){
+
+    const element=
+        document.getElementById(id);
+
+
+    if(!element)return 0;
+
+
+    let value=
+        parseFloat(element.value)||0;
+
+
+    if(value<0){
+
+        value=0;
+        element.value=0;
+
+    }
+
+
+    if(value>=500){
+
+        value=499.99;
+        element.value="499.99";
+
+    }
+
+
+    return value;
+
+}
+
+
+/* =====================================================
+   VARIANCE FORMAT
+===================================================== */
+
+function formatVariance(value){
+
+    if(Math.abs(value)<0.005){
+
+        value=0;
+
+    }
+
+
+    if(value>0){
+
+        return "+"+money(value);
+
+    }
+
+
+    if(value<0){
+
+        return "-"+money(
+            Math.abs(value)
+        );
+
+    }
+
+
+    return "+₱0.00";
+
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+function setStatusBox(
+    shortId,
+    remainingId,
+    variance
+){
+
+    const shortBox=
+        document.getElementById(
+            shortId
+        );
+
+
+    const remainingBox=
+        document.getElementById(
+            remainingId
+        );
+
+
+    if(variance< -0.004){
+
+        shortBox.style.display=
+            "block";
+
+        shortBox.innerHTML=
+            "⚠️ SHORT: "+
+            money(
+                Math.abs(variance)
+            );
+
+    }else{
+
+        shortBox.style.display=
+            "none";
+
+    }
+
+
+    if(variance>0.004){
+
+        remainingBox.style.display=
+            "block";
+
+        remainingBox.innerHTML=
+            "💰 SOBRA: "+
+            money(variance);
+
+    }else{
+
+        remainingBox.style.display=
+            "none";
+
+    }
+
+}
+
+
+/* =====================================================
+   MAIN REMITTANCE MONEY CALCULATOR
+===================================================== */
+
+function calculateRemittanceMoney(){
+
+    const l1Amount=
+        getLine1Amount();
+
+
+    const l2Amount=
+        getLine2Amount();
+
+
+    document
+        .getElementById("moneyL1Amount")
+        .textContent=
+        money(l1Amount);
+
+
+    document
+        .getElementById("moneyL2Amount")
+        .textContent=
+        money(l2Amount);
+
+
+    /* L1 NORMAL */
+
+    const l1Count=
+        getRemittanceCount(
+            "l1_remittanceCount"
+        );
+
+
+    const l1Last=
+        getLastMoney(
+            "l1_lastRemittance"
+        );
+
+
+    const l1FiveHundred=
+        l1Count*500;
+
+
+    const l1NormalCash=
+        l1FiveHundred+l1Last;
+
+
+    document
+        .getElementById("l1_500Total")
+        .textContent=
+        money(l1FiveHundred);
+
+
+    document
+        .getElementById("l1_normalCash")
+        .textContent=
+        money(l1NormalCash);
+
+
+    /* L1 PO / NON CASH */
+
+    const l1PO=
+        getNumber("l1_po");
+
+
+    const l1NonCash=
+        getNumber("l1_noncash");
+
+
+    document
+        .getElementById("l1_calcPO")
+        .textContent=
+        money(l1PO);
+
+
+    document
+        .getElementById("l1_calcNonCash")
+        .textContent=
+        money(l1NonCash);
+
+
+    /* L1 REQUIRED */
+
+    const l1Required=
+        Math.max(
+            0,
+            l1Amount-
+            l1PO-
+            l1NonCash
+        );
+
+
+    document
+        .getElementById("l1_required")
+        .textContent=
+        money(l1Required);
+
+
+    document
+        .getElementById("l1_calcCash")
+        .textContent=
+        money(l1NormalCash);
+
+
+    /* L1 NORMAL VARIANCE */
+
+    const l1NormalVariance=
+        l1NormalCash+
+        l1PO+
+        l1NonCash-
+        l1Amount;
+
+
+    setStatusBox(
+        "l1_short",
+        "l1_remaining",
+        l1NormalVariance
+    );
+
+
+    const l1Excess=
+        Math.max(
+            0,
+            l1NormalVariance
+        );
+
+
+    const l1Shortage=
+        Math.max(
+            0,
+            -l1NormalVariance
+        );
+
+
+    const l1CarryBox=
+        document.getElementById(
+            "l1_carry"
+        );
+
+
+    if(l1Excess>0.004){
+
+        l1CarryBox.style.display=
+            "block";
+
+        l1CarryBox.innerHTML=
+            "💰 L1 SOBRA → L2: "+
+            money(l1Excess);
+
+    }else{
+
+        l1CarryBox.style.display=
+            "none";
+
+    }
+
+
+    /* L2 NORMAL */
+
+    const l2Count=
+        getRemittanceCount(
+            "l2_remittanceCount"
+        );
+
+
+    const l2Last=
+        getLastMoney(
+            "l2_lastRemittance"
+        );
+
+
+    const l2FiveHundred=
+        l2Count*500;
+
+
+    const l2NormalCash=
+        l2FiveHundred+l2Last;
+
+
+    document
+        .getElementById("l2_500Total")
+        .textContent=
+        money(l2FiveHundred);
+
+
+    document
+        .getElementById("l2_normalCash")
+        .textContent=
+        money(l2NormalCash);
+
+
+    /* L2 PO / NON CASH */
+
+    const l2PO=
+        getNumber("l2_po");
+
+
+    const l2NonCash=
+        getNumber("l2_noncash");
+
+
+    document
+        .getElementById("l2_calcPO")
+        .textContent=
+        money(l2PO);
+
+
+    document
+        .getElementById("l2_calcNonCash")
+        .textContent=
+        money(l2NonCash);
+
+
+    /* L2 REQUIRED */
+
+    const l2Required=
+        Math.max(
+            0,
+            l2Amount-
+            l2PO-
+            l2NonCash
+        );
+
+
+    document
+        .getElementById("l2_required")
+        .textContent=
+        money(l2Required);
+
+
+    /* L2 BEFORE FINAL */
+
+    const l2CashBeforeFinal=
+        l2NormalCash+
+        l1Excess;
+
+
+    document
+        .getElementById("l2_cashBeforeFinal")
+        .textContent=
+        money(l2CashBeforeFinal);
+
+
+    document
+        .getElementById("l2_l1Excess")
+        .textContent=
+        money(l1Excess);
+
+
+    document
+        .getElementById("l2_calcCash")
+        .textContent=
+        money(l2NormalCash);
+
+
+    document
+        .getElementById("l2_calcL1Excess")
+        .textContent=
+        money(l1Excess);
+
+
+    /* L2 VARIANCE */
+
+    const l2NormalVariance=
+        l2CashBeforeFinal+
+        l2PO+
+        l2NonCash-
+        l2Amount;
+
+
+    /* FINAL MIXED CASH */
+
+    const finalMixedCash=
+        Math.max(
+            0,
+            getNumber(
+                "finalMixedCash"
+            )
+        );
+
+
+    document
+        .getElementById(
+            "finalMixedDisplay"
+        )
+        .textContent=
+        money(finalMixedCash);
+
+
+    /* FINAL → L1 */
+
+    const finalToL1=
+        Math.min(
+            finalMixedCash,
+            l1Shortage
+        );
+
+
+    const moneyAfterL1=
+        Math.max(
+            0,
+            finalMixedCash-
+            finalToL1
+        );
+
+
+    /* FINAL → L2 */
+
+    const l2Shortage=
+        Math.max(
+            0,
+            -l2NormalVariance
+        );
+
+
+    const finalToL2=
+        Math.min(
+            moneyAfterL1,
+            l2Shortage
+        );
+
+
+    /* FINAL REMAINING */
+
+    const finalUsed=
+        finalToL1+
+        finalToL2;
+
+
+    const finalRemaining=
+        Math.max(
+            0,
+            finalMixedCash-
+            finalUsed
+        );
+
+
+    document
+        .getElementById("finalToL1")
+        .textContent=
+        money(finalToL1);
+
+
+    document
+        .getElementById("finalToL2")
+        .textContent=
+        money(finalToL2);
+
+
+    document
+        .getElementById("finalUsed")
+        .textContent=
+        money(finalUsed);
+
+
+    document
+        .getElementById("finalRemaining")
+        .textContent=
+        money(finalRemaining);
+
+
+    /* FINAL VARIANCE */
+
+    const l1FinalVariance=
+        l1NormalVariance+
+        finalToL1;
+
+
+    const l2FinalVariance=
+        l2NormalVariance+
+        finalToL2;
+
+
+    document
+        .getElementById("l1_calcFinal")
+        .textContent=
+        money(finalToL1);
+
+
+    document
+        .getElementById("l1_variance")
+        .textContent=
+        formatVariance(
+            l1FinalVariance
+        );
+
+
+    document
+        .getElementById("l2_calcFinal")
+        .textContent=
+        money(finalToL2);
+
+
+    document
+        .getElementById("l2_variance")
+        .textContent=
+        formatVariance(
+            l2FinalVariance
+        );
+
+
+    /* L2 TRANSFER */
+
+    document
+        .getElementById(
+            "l2_l1TransferValue"
+        )
+        .textContent=
+        money(l1Excess);
+
+
+    /* L2 STATUS */
+
+    const l2ShortBox=
+        document.getElementById(
+            "l2_short"
+        );
+
+
+    const l2RemainingBox=
+        document.getElementById(
+            "l2_remaining"
+        );
+
+
+    if(l2FinalVariance< -0.004){
+
+        l2ShortBox.style.display=
+            "block";
+
+        l2ShortBox.innerHTML=
+            "⚠️ L2 SHORT: "+
+            money(
+                Math.abs(l2FinalVariance)
+            );
+
+    }else{
+
+        l2ShortBox.style.display=
+            "none";
+
+    }
+
+
+    if(l2FinalVariance>0.004){
+
+        l2RemainingBox.style.display=
+            "block";
+
+        l2RemainingBox.innerHTML=
+            "💰 L2 SOBRA: "+
+            money(l2FinalVariance);
+
+    }else{
+
+        l2RemainingBox.style.display=
+            "none";
+
+    }
+
+
+    /* GRAND */
+
+    const grandAmount=
+        l1Amount+
+        l2Amount;
+
+
+    const grandNormalCash=
+        l1NormalCash+
+        l2NormalCash;
+
+
+    const grandPO=
+        l1PO+
+        l2PO;
+
+
+    const grandNonCash=
+        l1NonCash+
+        l2NonCash;
+
+
+    const grandCash=
+        grandNormalCash+
+        finalMixedCash;
+
+
+    const grandVariance=
+        grandCash+
+        grandPO+
+        grandNonCash-
+        grandAmount;
+
+
+    /* GRAND DISPLAY */
+
+    document
+        .getElementById("grandL1Amount")
+        .textContent=
+        money(l1Amount);
+
+
+    document
+        .getElementById("grandL2Amount")
+        .textContent=
+        money(l2Amount);
+
+
+    document
+        .getElementById("grandAmount")
+        .textContent=
+        money(grandAmount);
+
+
+    document
+        .getElementById("grandL1Cash")
+        .textContent=
+        money(l1NormalCash);
+
+
+    document
+        .getElementById("grandL2Cash")
+        .textContent=
+        money(l2NormalCash);
+
+
+    document
+        .getElementById("grandCarry")
+        .textContent=
+        money(l1Excess);
+
+
+    document
+        .getElementById("grandFinalMoney")
+        .textContent=
+        money(finalMixedCash);
+
+
+    document
+        .getElementById("grandFinalL1")
+        .textContent=
+        money(finalToL1);
+
+
+    document
+        .getElementById("grandFinalL2")
+        .textContent=
+        money(finalToL2);
+
+
+    document
+        .getElementById("grandCash")
+        .textContent=
+        money(grandCash);
+
+
+    document
+        .getElementById("grandPO")
+        .textContent=
+        money(grandPO);
+
+
+    document
+        .getElementById("grandNonCash")
+        .textContent=
+        money(grandNonCash);
+
+
+    document
+        .getElementById("grandVariance")
+        .textContent=
+        formatVariance(
+            grandVariance
+        );
+
+
+    document
+        .getElementById("combinedVariance")
+        .textContent=
+        formatVariance(
+            grandVariance
+        );
+
+
+    const combinedStatus=
+        document.getElementById(
+            "combinedStatus"
+        );
+
+
+    if(grandVariance< -0.004){
+
+        combinedStatus.innerHTML=
+            "⚠️ KULANG: "+
+            money(
+                Math.abs(grandVariance)
+            );
+
+    }else if(grandVariance>0.004){
+
+        combinedStatus.innerHTML=
+            "💰 SOBRA: "+
+            money(grandVariance);
+
+    }else{
+
+        combinedStatus.innerHTML=
+            "✅ BALANCED — VARIANCE IS ₱0.00";
+
+    }
+
+
+    saveAppData();
+
+}
+
+
+/* =====================================================
+   RESET REMITTANCE
+===================================================== */
+
+function resetRemittanceMoney(){
+
+    document
+        .querySelectorAll(
+            "#remittanceMoney input"
+        )
+        .forEach(function(input){
+
+            input.value="";
+
+        });
+
+
+    calculateRemittanceMoney();
+
+    saveAppData();
+
+}
+
+
+/* =====================================================
+   PRICE DIGIT CHECKER
+===================================================== */
+
+function normalizeDigit(digit){
+
+    if(
+        digit==="6" ||
+        digit==="9"
+    ){
+
+        return "6/9";
+
+    }
+
+    return digit;
+
+}
+
+
+function getDigits(price){
+
+    return price
+        .replace(/[^0-9]/g,"")
+        .split("");
+
+}
+
+
+function countDigits(digits){
+
+    const count={};
+
+
+    digits.forEach(function(digit){
+
+        const key=
+            normalizeDigit(digit);
+
+
+        if(!count[key]){
+
+            count[key]=0;
+
+        }
+
+
+        count[key]++;
+
+    });
+
+
+    return count;
+
+}
+
+
+function calculateMissing(
+    oldPrices,
+    newPrices
+){
+
+    const oldDigits=[];
+
+
+    Object.values(oldPrices)
+        .forEach(function(price){
+
+            oldDigits.push(
+                ...getDigits(price)
+            );
+
+        });
+
+
+    const newDigits=[];
+
+
+    Object.values(newPrices)
+        .forEach(function(price){
+
+            newDigits.push(
+                ...getDigits(price)
+            );
+
+        });
+
+
+    const oldCount=
+        countDigits(oldDigits);
+
+
+    const newCount=
+        countDigits(newDigits);
+
+
+    const missing={};
+
+
+    Object.keys(newCount)
+        .forEach(function(digit){
+
+            const available=
+                oldCount[digit]||0;
+
+
+            const needed=
+                newCount[digit];
+
+
+            if(needed>available){
+
+                missing[digit]=
+                    needed-available;
+
+            }
+
+        });
+
+
+    return missing;
+
+}
+
+
+function digitCheckerCalculate(){
+
+    const oldPrices={
+
+        D:
+            document
+                .getElementById("oldD")
+                .value,
+
+        U:
+            document
+                .getElementById("oldU")
+                .value,
+
+        P:
+            document
+                .getElementById("oldP")
+                .value
+
+    };
+
+
+    const newPrices={
+
+        D:
+            document
+                .getElementById("newD")
+                .value,
+
+        U:
+            document
+                .getElementById("newU")
+                .value,
+
+        P:
+            document
+                .getElementById("newP")
+                .value
+
+    };
+
+
+    const missing=
+        calculateMissing(
+            oldPrices,
+            newPrices
+        );
+
+
+    const result=
+        document
+            .getElementById(
+                "digitResult"
+            );
+
+
+    let totalMissing=0;
+
+
+    Object.values(missing)
+        .forEach(function(number){
+
+            totalMissing+=number;
+
+        });
+
+
+    if(totalMissing===0){
+
+        result.innerHTML=`
+
+            <div class="available">
+                ✅ ALL DIGITS CAN BE REUSED!
+            </div>
+
+        `;
+
+
+        saveAppData();
+
+        return;
+
+    }
+
+
+    let html=`
+
+        <p>
+            <strong>
+                Mga digit na kailangan idagdag:
+            </strong>
+        </p>
+
+        <div class="missing">
+
+    `;
+
+
+    Object.keys(missing)
+        .forEach(function(digit){
+
+            const quantity=
+                missing[digit];
+
+
+            for(
+                let i=0;
+                i<quantity;
+                i++
+            ){
+
+                html+=digit+" ";
+
+            }
+
+        });
+
+
+    html+=`
+
+        </div>
+
+        <p>
+            Total additional digits:
+            <strong>${totalMissing}</strong>
+        </p>
+
+        <p class="note">
+            6/9 means puwedeng 6 o 9 ang gamitin.
+        </p>
+
+    `;
+
+
+    result.innerHTML=html;
+
+    saveAppData();
+
+}
+
+
+/* =====================================================
+   AUTO SAVE
+===================================================== */
+
+document
+    .querySelectorAll(
+        "input,select"
+    )
+    .forEach(function(field){
+
+        field.addEventListener(
+            "input",
+            function(){
+
+                saveAppData();
+
+            }
+        );
+
+
+        field.addEventListener(
+            "change",
+            function(){
+
+                saveAppData();
+
+            }
+        );
+
+    });
+
+
+/* =====================================================
+   VISIBILITY SAVE
+===================================================== */
+
+document.addEventListener(
+    "visibilitychange",
+    function(){
+
+        if(
+            document.visibilityState===
+            "hidden"
+        ){
+
+            saveAppData();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   START
+===================================================== */
+
+window.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        loadAppData();
+
+        /*
+           IMPORTANT:
+           Load the saved lock AFTER loading
+           the saved Beginning/Price values.
+        */
+
+        loadBeginningPriceLock();
+
+    }
+);
+
+</script>
+
+</body>
+</html>
